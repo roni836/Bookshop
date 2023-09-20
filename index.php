@@ -22,7 +22,7 @@
                 while($row = mysqli_fetch_array($query)):
             ?>
 
-          <a href="" class="list-group-item list-group-item-action"><?=$row['cat_title'];?></a>
+          <a href=" index.php?cat_id=<?=$row['cat_id'];?>" class="list-group-item list-group-item-action"><?=$row['cat_title'];?></a>
 
         <?php endwhile; ?>
 
@@ -31,16 +31,35 @@
         <div class="col-9">
             <div class="row">
             <?php
-                $query = mysqli_query($connect,"SELECT * FROM books");
+            if(isset($_GET['find'])){
+                $search = $_GET['search'];
+                $query = mysqli_query($connect,"SELECT * FROM books JOIN categories ON books.category = categories.cat_id WHERE title LIKE'%$search%' OR author LIKE '%$search%' OR cat_title LIKE '%$search%'"); 
+            }
+            else{
+                if(isset($_GET['cat_id'])){
+                    $cat_id = $_GET['cat_id'];
+                    $query = mysqli_query($connect,"SELECT * FROM books JOIN categories ON books.category = categories.cat_id WHERE cat_id ='$cat_id'");
+                 }
+               else {$query = mysqli_query($connect,"SELECT * FROM books JOIN categories ON books.category = categories.cat_id");
+                }
+                }
+
+            $count = mysqli_num_rows($query);
+            if($count < 1){
+                echo "<h2 class='display-3'>OOPS!!<br>Book Not Found!</h2>";
+            }
                 while($data = mysqli_fetch_array($query)):
             ?>
                 <div class="col-3">
                     <div class="card">
-                        <img src="<?= 'images/'.$data['cover_image'];?>" alt="" class="w-100 ">
-                        <div class="card-body">
+                        <img src="<?= 'images/'.$data['cover_image'];?>" alt="" class="w-100" style='height:300px;object-fit:cover'>
+                        <div class="card-body gap-2">
                             <h2 class="h5">Rs.<?= $data['price'];?>/-<del><?= $data['discount_price'];?>/-</del></h2>
-                            <h2 class="h6"><?= $data['title'];?></h2>
-                            <span class="bg-success text-white badge"><?= $data['category'];?></span>
+                            <h2 class="h6 text-truncate" title="<?= $data['title'];?>"><?= $data['title'];?></h2>
+                            <span class="bg-success text-white badge"><?= $data['cat_title'];?></span>
+
+                            <a href="view.php?book_id=<?=$data['id'];?>" class="btn btn-info">View</a>
+
                         </div>
                     </div>
                 </div>

@@ -8,7 +8,11 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Navigation links -->
+        <form action="" class="d-flex">
+            <input type="search" name="search" class="form-control" placeholder="Search here anything">
+            <input type="submit" value="search" name="find" class="btn btn-danger">
+        </form>
+
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
