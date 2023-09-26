@@ -34,7 +34,10 @@
             $book_id = $_GET['book_id'];
             $query = mysqli_query($connect,"SELECT * FROM books JOIN categories ON books.category = categories.cat_id WHERE id='$book_id'");
             $data = mysqli_fetch_array($query);
-            ?>
+
+            $count = mysqli_num_rows($query);
+            if($count > 0 ){
+                ?>
              <div class="row">
                 <div class="col-3">
                     <div class="card">
@@ -65,13 +68,11 @@
                         </tr>
                         <tr>
                             <th>Price: </th>
-                            <th class="d-flex align-item-center gap-2 ">
+                            <th class="d-flex align-items-center gap-2 ">
                                 <h3 class="text-danger h3">Rs.<?=$data['discount_price'];?></h3>
                                 <del><h6 class="text-secondary">Rs.<?=$data['price'];?></h6></del>
                             </th>
                         </tr>
-                        
-                  
                     </table>
                     <div class="d-flex gap-3">
                         <a href="" class="btn btn-success btn-lg">Buy Now</a>
@@ -80,7 +81,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row mt-4">
                 <div class="card">
                     <div class="card-header">
                         <h5>Description:</h5>
@@ -90,7 +91,37 @@
                     </div>
                 </div>
             </div>
+        <?php
+            }
+            else{
+                echo"<h2> Not Found </h2>";
+            }
+        ?>
+        <div class="row">
+            <div class="col-12">
+                <h2 class="my-3">Related Books</h2>
+            </div>
+            <?php
+            $query = mysqli_query($connect,"SELECT * FROM books JOIN categories ON books.category = categories.cat_id WHERE id<>'$book_id'");
 
+            $count = mysqli_num_rows($query);
+            if($count < 1){
+                echo "<h2 class='display-3'>OOPS!!<br>Book Not Found!</h2>";
+            }
+                while($data = mysqli_fetch_array($query)):
+            ?>
+                <div class="col-2">
+                    <div class="card">
+                        <img src="<?= 'images/'.$data['cover_image'];?>" alt="" class="w-100" style='height:200px;object-fit:cover'>
+                        <div class="card-body gap-2">
+                            <h2 class="text-truncate small" title="<?= $data['title'];?>"><?= $data['title'];?></h2>
+
+                            <a href="view.php?book_id=<?=$data['id'];?>" class="btn btn-info btn-sm">View</a>
+
+                        </div>
+                    </div>
+                </div>
+            <?php endwhile;?>
         </div>
     </div>
 </div>

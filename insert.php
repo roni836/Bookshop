@@ -1,4 +1,9 @@
-<?php include_once "connect.php";?>
+<?php include_once "connect.php";
+if(!isset($_SESSION['account'])){
+    echo "<script>window.open('login.php','_self')</script>";
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
