@@ -43,7 +43,9 @@
                         if($count > 0){
 
                             $_SESSION['account'] = $email;
+
                             if($check['isAdmin'] == 1){
+                                $_SESSION['admin'] = $email;
                                 echo "<script>window.open('admin/index.php','_self')</script>";
                             }
                             else{

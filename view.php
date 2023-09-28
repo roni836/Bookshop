@@ -76,7 +76,7 @@
                     </table>
                     <div class="d-flex gap-3">
                         <a href="" class="btn btn-success btn-lg">Buy Now</a>
-                        <a href="" class="btn btn-warning btn-lg">Add To Cart</a>
+                        <a href="cart.php?book_id=<?=$data['id'];?>&atc=true" class="btn btn-warning btn-lg">Add To Cart</a>
                     </div>
                 </div>
             </div>
@@ -125,6 +125,6 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>
+

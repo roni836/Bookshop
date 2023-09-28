@@ -16,12 +16,9 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#">Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Users</a>
+                <a class="nav-link text-white" href="../index.php">User Dashboard</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Products</a>

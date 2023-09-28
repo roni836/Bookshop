@@ -28,9 +28,6 @@
                 <li class="nav-item">
                     <a class="nav-link " href="index.php">Home</a>
                 </li>                 
-                    <li class="nav-item">
-                        <a class="nav-link " href="insert.php">Insert Record</a>
-                    </li>
                     <li class="nav-item mt-1 ms-3">
                         <a class="btn btn-sm btn-danger" href="logout.php">Logout</a>
                     </li>
