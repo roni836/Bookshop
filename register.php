@@ -23,6 +23,10 @@
                             <input type="text" name="name" class="form-control" required>
                         </div>
                         <div class="mb-3">
+                            <label for="">Contact</label>
+                            <input type="tel" name="contact" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
                             <label for="">Email</label>
                             <input type="email" name="email" class="form-control" required>
                         </div>
@@ -37,10 +41,11 @@
                     <?php
                     if(isset($_POST['create'])){
                         $name = $_POST['name'];
+                        $contact = $_POST['contact'];
                         $email = $_POST['email'];
                         $password = md5($_POST['password']);
 
-                        $query = mysqli_query($connect,"INSERT INTO accounts(name,email,password) value('$name','$email','$password')");
+                        $query = mysqli_query($connect,"INSERT INTO accounts(name,contact,email,password) value('$name','$contact','$email','$password')");
 
                         if($query){
                             echo "<script>window.open('login.php','_self')</script>";

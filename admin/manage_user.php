@@ -12,7 +12,7 @@ if(!isset($_SESSION['admin'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Book-BookShop | Admin Panel</title>
+    <title>Manage User - BookShop | Admin Panel</title>
 </head>
 <body class="bg-secondary">
  <?php include_once "./admin_header.php";?>
@@ -25,11 +25,19 @@ if(!isset($_SESSION['admin'])){
         ?>
         </div>
         <div class="col-9">
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <h2 class="text-white">
+                        Manage Users
+                    </h2>
+                </div>
+            </div>
             <table class="table table-hover table-bodered">
                 <thead>
                     <tr>
                         <th>id</th>
                         <th>Name</th>
+                        <th>Contact</th>
                         <th>Email</th>
                         <th>Type</th>
                         <th>Action</th>
@@ -43,6 +51,7 @@ if(!isset($_SESSION['admin'])){
                         <tr>
                             <td><?=$data['user_id'];?></td>
                             <td><?=$data['name'];?></td>
+                            <td><?=$data['contact'];?></td>
                             <td><?=$data['email'];?></td>
                             <td><?=($data['isAdmin'])? "Administrator":"Standard";?></td>>
                             <td>

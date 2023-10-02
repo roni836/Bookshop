@@ -1,4 +1,11 @@
-<?php include_once "connect.php"; ?>
+<?php include_once "connect.php"; 
+
+if(!isset($_GET['book_id'])){
+    echo "<script>window.open('index.php','_self')</script>";
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

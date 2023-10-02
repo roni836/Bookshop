@@ -12,7 +12,7 @@ if(!isset($_SESSION['admin'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Book-BookShop | Admin Panel</title>
+    <title>Manage Book - BookShop | Admin Panel</title>
 </head>
 <body class="bg-secondary">
  <?php include_once "./admin_header.php";?>
