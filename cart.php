@@ -34,7 +34,7 @@ if(!isset($_SESSION['account'])){
             $myorderid = $myorder['order_id'];
             // getting order items
         
-            $myorderitems = mysqli_query($connect,"SELECT * FROM order_items JOIN books ON order_items.book_id=books.id  where order_id = '$myorderid' AND is_ordered='0'");
+            $myorderitems = mysqli_query($connect,"SELECT * FROM order_items JOIN books ON order_items.book_id=books.id  where order_id = '$myorderid'");
             $count_order_items = mysqli_num_rows($myorderitems);
 
             if($count_order_items):
@@ -100,9 +100,16 @@ if(!isset($_SESSION['account'])){
             <?php
                 if($myorder['coupon_id']):
             ?>
-                <span class="list-group-item list-group-action d-flex justify-content-between bg-warning text-white">
-                <span>Coupon Discount</span>
-                <span><?= $coupon_amount = $myorder['coupon_amount'];?>/-</span>
+                <span class="list-group-item list-group-action bg-warning text-black">
+                    <div class="d-flex justify-content-between">
+                    <span>Coupon Discount</span>
+                    <span class="fw-bold"><?= $coupon_amount = $myorder['coupon_amount'];?>/-</span>
+                    </div>
+                <div class="text-center justify-content-between">
+                    <small class="fw-bold ">Coupon Applied -  <?= $myorder['coupon_code'];?>
+                    <a href="cart.php?remove_coupon=<?= $myorder['order_id'];?>" class="fw-bold text-decoration-none text-danger">X</a>
+                    </small>
+                </div>
             </span>
             <?php endif;?>
 
@@ -184,7 +191,7 @@ if(!isset($_SESSION['account'])){
             $current_order_id = $current_order['order_id'];
 
             // Checking if order item already  exist or not
-            $check_order_item = mysqli_query($connect,"SELECT * FROM order_items where (order_id='$current_order_id' AND book_id='$book_id') AND is_ordered='0'");
+            $check_order_item = mysqli_query($connect,"SELECT * FROM order_items where (order_id='$current_order_id' AND book_id='$book_id')");
             $current_order_item = mysqli_fetch_array($check_order_item);
             $count_current_order_item = mysqli_num_rows($check_order_item);
 
@@ -226,7 +233,7 @@ if(!isset($_SESSION['account'])){
     $current_order_id = $current_order['order_id'];
 
     // Checking if order item already  exist or not
-    $check_order_item = mysqli_query($connect,"SELECT * FROM order_items where (order_id='$current_order_id' AND book_id='$book_id') AND is_ordered='0'");
+    $check_order_item = mysqli_query($connect,"SELECT * FROM order_items where (order_id='$current_order_id' AND book_id='$book_id')");
     $current_order_item = mysqli_fetch_array($check_order_item);
     $count_current_order_item = mysqli_num_rows($check_order_item);
 
@@ -285,6 +292,21 @@ if(!isset($_SESSION['account'])){
         }
         else{
             echo "<script>alert('failed to delete')</script>";
+        }
+    }
+
+    // Remove Coupon
+
+    if(isset($_GET['remove_coupon'])){
+        $id = $_GET['remove_coupon'];
+
+        $queryForRemoveCoupon = mysqli_query($connect,"UPDATE orders SET coupon_id = 'null'  where order_id='$id'");
+
+        if($queryForRemoveCoupon){
+            echo "<script>window.open('cart.php','_self')</script>";
+        }
+        else{
+            echo "<script>alert('failed to remove coupon')</script>";
         }
     }
 ?>

@@ -95,28 +95,37 @@ if(!isset($_SESSION['account'])){
             </div>
         </div>
 
-        <div class="col-4">
+        <div class="col-4 ">
             <h2>Saved Address</h2>
+            <form action="" method="post">
             <div class="grid">
                 <?php
 
                 $callingsavedaddress = mysqli_query($connect,"SELECT * FROM address WHERE user_id ='$user_id'");
+                $count_address = mysqli_num_rows($callingsavedaddress);
+
+                if($count_address > 0):
                 while($add = mysqli_fetch_array($callingsavedaddress)):
                 ?>
                     <label class="card">
                             <!-- Address Cards -->
-                        <input type="radio" name="address" class="radio" type="radio" checked>
+                        <input name="address_id" class="radio" type="radio" value="<?= $add['address_id'];?>" checked >
                             <span class="plan-details">
                                 <span class="plan-type"><?=($add['type'] == 0)? "Office" : (($add['type'] == 1)? "Home" : "Other");?></span>
                                 <span class="plan-cost">Name: <?=$add['alt_name']."<br>"."Contact No: ".$add['alt_contact'];?></span>
-                                <span><?=$add['house_no']."|".$add['street']."-".$add['area']."<br> Landmark: ".$add['landmark']."<br>"."City: ".$add['city']."<br>"."State: ".$add['state']."<br>".$add['pincode'];?></span>
+                                <span><?=$add['house_no']."|".$add['street']."-".$add['area']."<br> Landmark: ".$add['landmark']."<br>"."Pincode: ".$add['pincode']."<br>"."City: ".$add['city']."<br>"."State: ".$add['state'];?></span>
+                            <a href="checkout.php?address_id=<?=$add['address_id'];?>" class="badge bg-danger text-white text-decoration-none w-22 ms-auto">Delete</a>
                             </span>
                     </label>
                     <?php endwhile;?>
                     <div class="d-flex justify-content-between gap-3">
                         <a href="cart.php"class="btn btn-dark ">Go Back</a>
-                        <a href=""class="btn btn-primary ">Proceed To Payment</a>
+                        <input type="submit" class="btn btn-primary" name="make_payment" value="Proceed To Payment">
                     </div> 
+                </form>
+                <?php else: ?>
+                    <h3 class="text-muted h5">Empty Saved Address</h3>
+                <?php endif;?>
             </div>
         </div>
     </div>
@@ -147,4 +156,35 @@ if(!isset($_SESSION['account'])){
         }
     }
 
+
+
+    if(isset($_GET['address_id'])){
+        $id = $_GET['address_id'];
+        $user_id = $getuser['user_id'];
+
+        $queryForDeleteAddress = mysqli_query($connect,"DELETE FROM address WHERE address_id ='$id' AND user_id='$user_id'");
+
+        if($queryForDeleteAddress){
+            echo "<script>window.open('checkout.php','_self')</script>";
+        }
+        else{
+            echo "<script>alert('failed to delete Address')</script>";
+        }
+    }
+
+    if(isset($_POST['make_payment'])){
+        $address_id = $_POST['address_id'];
+        $order_id = $myorder['order_id'];
+
+        // Update this address in order record
+
+        $queryForAddressUpdate = mysqli_query($connect,"UPDATE orders SET address_id = '$address_id' WHERE user_id='$user_id' AND order_id = '$order_id'");
+
+        if($queryForAddressUpdate){
+            echo "<script>window.open('make_payment.php','_self')</script>";
+        }
+        else{
+            echo "<script>alert('Fail To Proceed!')</script>";
+        }
+    }
 ?>
